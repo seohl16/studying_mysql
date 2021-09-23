@@ -33,28 +33,6 @@ var app = http.createServer(function(request,response){
           response.end(html);
         });
       } else {
-        // fs.readdir('./data', function(error, filelist){
-        //   var filteredId = path.parse(queryData.id).base;
-        //   fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
-        //     var title = queryData.id;
-        //     var sanitizedTitle = sanitizeHtml(title);
-        //     var sanitizedDescription = sanitizeHtml(description, {
-        //       allowedTags:['h1']
-        //     });
-        //     var list = template.list(filelist);
-        //     var html = template.HTML(sanitizedTitle, list,
-        //       `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
-        //       ` <a href="/create">create</a>
-        //         <a href="/update?id=${sanitizedTitle}">update</a>
-        //         <form action="delete_process" method="post">
-        //           <input type="hidden" name="id" value="${sanitizedTitle}">
-        //           <input type="submit" value="delete">
-        //         </form>`
-        //     );
-        //     response.writeHead(200);
-        //     response.end(html);
-        //   });
-        // });
       db.query(`SELECT * FROM topic`, function(err, topics) {
         if (err) {  throw err; }
         db.query(`SELECT * FROM topic WHERE id=?`, [queryData.id], function (err2, topic) {
@@ -141,12 +119,6 @@ var app = http.createServer(function(request,response){
       });
       request.on('end', function(){
           var post = qs.parse(body);
-          // fs.rename(`data/${id}`, `data/${title}`, function(error){
-          //   fs.writeFile(`data/${title}`, description, 'utf8', function(err){
-          //     response.writeHead(302, {Location: `/?id=${title}`});
-          //     response.end();
-          //   })
-          // });
           db.query(`UPDATE topic SET title=?, description=?, author_id=1 WHERE id=?`, [post.title, post.description, post.id], function (err, result) {
             response.writeHead(302, {Location: `/?id=${post.id}`});
             response.end();
@@ -166,10 +138,6 @@ var app = http.createServer(function(request,response){
             response.writeHead(302, {Location: `/`});
             response.end();
           });
-          // fs.unlink(`data/${filteredId}`, function(error){
-          //   response.writeHead(302, {Location: `/`});
-          //   response.end();
-          // })
       });
     } else {
       response.writeHead(404);
