@@ -5,34 +5,60 @@ var db = mysql.createConnection({
 	user:'root', 
 	password:'', 
 	// database: 'opentutorials'
-	database : 'express_db'
+	// database : 'express_db'
   });
   
 db.connect(function (err) {
 	if (err) throw err;
 	console.log("Connected");
 	// Error : ER_DB_CREATE_EXISTS
-	// db.query(`CREATE DATABASE express_db`, function (err, result) {
-	// 	if (err) throw err;
-	// 	console.log('database created');
-	// });
+	db.query(`CREATE DATABASE IF NOT EXISTS express_db`, function (err, result) {
+		if (err) throw err;
+		console.log('database created');
+	});
+	db.query(`use express_db`, function (err, result) {
+		if (err) throw err;
+		console.log('use database express_db');
+	})
+	var sql = ``;
+	sql = `DROP TABLE IF EXISTS users`;
+	db.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log('table droped');
+	});
 	
-	// const sql = `CREATE TABLE users (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	// 	name VARCHAR(255) NOT NULL, 
-	// 	email VARCHAR(255) NOT NULL)`;
-	// db.query(sql, function (err, result) {
-	// 	if (err) throw err;
-	// 	console.log('table created');
-	// });
+	sql = `CREATE TABLE IF NOT EXISTS users (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+		name VARCHAR(255) NOT NULL, 
+		email VARCHAR(255) NOT NULL,
+		UNIQUE INDEX (name))`;
+	db.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log('table created');
+	});
 
-	// const sql = `INSERT INTO users (id, name, email)
-	// VALUES ('90', 'William', 'johnn@email.com')`;
-	// db.query(sql, function (err, result) {
-	// 	if (err) throw err;
-	// 	console.log('inserted data');
-	// });
+	sql = `REPLACE INTO users (id, name, email)
+	VALUES (NULL, 'William', 'william@email.com')`;
+	db.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log('inserted data');
+	});
 
-	const sql = `select * from users`;
+
+	sql = `REPLACE INTO users (id, name, email)
+	VALUES (NULL, 'JOHN', 'johnn@email.com')`;
+	db.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log('inserted data');
+	});
+
+	sql = `REPLACE INTO users (id, name, email)
+	VALUES (NULL, 'JOHN', 'johnn@email.com')`;
+	db.query(sql, function (err, result) {
+		if (err) throw err;
+		console.log('inserted data');
+	});
+
+	sql = `select * from users`;
 	db.query(sql, function (err, result) {
 		if (err) throw err;
 		console.log(result);
