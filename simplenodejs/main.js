@@ -12,7 +12,11 @@ var app = http.createServer(function(request,response){
     } else {
       users.user(request, response, queryData);
     };
-  } else {
+  } else if (pathname === '/create') {
+    users.ucreate(request, response, queryData);
+  } else if (pathname === '/create_process') {
+    users.ucreate_process(request, response, queryData);
+  }else {
     response.writeHead(404);
     response.end('Not found');
   };

@@ -21,11 +21,11 @@ db.connect(function (err) {
 		console.log('use database express_db');
 	})
 	var sql = ``;
-	sql = `DROP TABLE IF EXISTS users`;
-	db.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log('table droped');
-	});
+	// sql = `DROP TABLE IF EXISTS users`;
+	// db.query(sql, function (err, result) {
+	// 	if (err) throw err;
+	// 	console.log('table droped');
+	// });
 	
 	sql = `CREATE TABLE IF NOT EXISTS users (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 		name VARCHAR(255) NOT NULL, 
