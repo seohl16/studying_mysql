@@ -16,7 +16,13 @@ var app = http.createServer(function(request,response){
     users.ucreate(request, response, queryData);
   } else if (pathname === '/create_process') {
     users.ucreate_process(request, response, queryData);
-  }else {
+  } else if (pathname === '/update') {
+    users.updateu(request, response, queryData);
+  } else if (pathname === '/update_process') {
+    users.update_process(request, response);
+  } else if (pathname === '/delete_process') {
+    users.udelete_process(request, response, queryData);
+  } else {
     response.writeHead(404);
     response.end('Not found');
   };
