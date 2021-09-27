@@ -1,3 +1,5 @@
+var db = require('./db');
+
 module.exports = {
   HTML:function(title, list, body, control){
     return `

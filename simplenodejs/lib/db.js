@@ -1,74 +1,44 @@
 var mysql = require('mysql');
 const fs = require('fs');
+const { builtinModules } = require('module');
 const sqlite3 = require('sqlite3').verbose();
 
 const dataSql = fs.readFileSync("./sample.sql").toString();
 
-var db = mysql.createConnection({
-	host:'localhost', 
-	user:'root', 
-	password:'', 
-	// database: 'opentutorials'
-	// database : 'express_db'
-  });
+let db = new sqlite3.Database("mydatabase", err => {
+	if (err) {
+		return console.err(err.message);
+	}
+	console.log("connected to the in-memory SQLite database.");
+})
 
-db.connect(function (err) {
-	if (err) throw err;
-	console.log("Connected");
-	// Error : ER_DB_CREATE_EXISTS
-	db.query(`CREATE DATABASE IF NOT EXISTS express_db`, function (err, result) {
-		if (err) throw err;
-		console.log('database created');
-	});
-	db.query(`use express_db`, function (err, result) {
-		if (err) throw err;
-		console.log('use database express_db');
-	})
-	var sql = ``;
-	// sql = `DROP TABLE IF EXISTS users`;
-	// db.query(sql, function (err, result) {
-	// 	if (err) throw err;
-	// 	console.log('table droped');
-	// });
-	
-	sql = `CREATE TABLE IF NOT EXISTS users (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-		name VARCHAR(255) NOT NULL, 
-		email VARCHAR(255) NOT NULL,
-		UNIQUE INDEX (name))`;
-	db.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log('table created');
-	});
+// const dataArr = dataSql.toString().split(";");
 
-	// sql = `REPLACE INTO users (id, name, email)
-	// VALUES (NULL, 'William', 'william@email.com')`;
-	// db.query(sql, function (err, result) {
-	// 	if (err) throw err;
-	// 	console.log('inserted data');
-	// });
+// db.serialize( () => {
+// 	console.log(dataArr);
+// 	db.run("PRAGMA foreign_keys=OFF;");
+// 	db.run("BEGIN TRANSACTION;");
+// 	dataArr.forEach(query => {
+// 		if (query && !query.includes("/*") && !query.includes("--")) {
+// 			query += ";";
+// 			console.log(query);
+// 			// db.run("\n\n;", err => {
+// 			// 	if (err) console.log(err);
+// 			// })
+// 			db.run(query, err => {
+// 				if (err) throw err;
+// 			})
+// 		}
+// 	})
+// 	db.run("COMMIT;");
+// 	console.log("finished");
+// })
 
-
-	// sql = `REPLACE INTO users (id, name, email)
-	// VALUES (NULL, 'JOHN', 'johnn@email.com')`;
-	// db.query(sql, function (err, result) {
-	// 	if (err) throw err;
-	// 	console.log('inserted data');
-	// });
-
-	// sql = `REPLACE INTO users (id, name, email)
-	// VALUES (NULL, 'JOHN', 'johnn@email.com')`;
-	// db.query(sql, function (err, result) {
-	// 	if (err) throw err;
-	// 	console.log('inserted data');
-	// });
-
-	sql = `select * from users`;
-	db.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log(result);
-	});
-});
-
+// db.close(err => {
+// 	if (err) {
+// 		return console.err(err.message);
+// 	}
+// 	console.log("closed database");
+// })
 
 module.exports = db;
-// exports db.... 
