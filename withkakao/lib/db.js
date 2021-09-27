@@ -31,6 +31,9 @@ let db = new sqlite3.Database("mydatabase", err => {
 // 		}
 // 	})
 // 	db.run("COMMIT;");
+// 	db.all(`SELECT * from companyl`, function (err,result) {
+// 		console.log(result);
+// 	})
 // 	console.log("finished");
 // })
 
