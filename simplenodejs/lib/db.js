@@ -1,4 +1,8 @@
 var mysql = require('mysql');
+const fs = require('fs');
+const sqlite3 = require('sqlite3').verbose();
+
+const dataSql = fs.readFileSync("./sample.sql").toString();
 
 var db = mysql.createConnection({
 	host:'localhost', 
@@ -7,7 +11,7 @@ var db = mysql.createConnection({
 	// database: 'opentutorials'
 	// database : 'express_db'
   });
-  
+
 db.connect(function (err) {
 	if (err) throw err;
 	console.log("Connected");
@@ -36,27 +40,27 @@ db.connect(function (err) {
 		console.log('table created');
 	});
 
-	sql = `REPLACE INTO users (id, name, email)
-	VALUES (NULL, 'William', 'william@email.com')`;
-	db.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log('inserted data');
-	});
+	// sql = `REPLACE INTO users (id, name, email)
+	// VALUES (NULL, 'William', 'william@email.com')`;
+	// db.query(sql, function (err, result) {
+	// 	if (err) throw err;
+	// 	console.log('inserted data');
+	// });
 
 
-	sql = `REPLACE INTO users (id, name, email)
-	VALUES (NULL, 'JOHN', 'johnn@email.com')`;
-	db.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log('inserted data');
-	});
+	// sql = `REPLACE INTO users (id, name, email)
+	// VALUES (NULL, 'JOHN', 'johnn@email.com')`;
+	// db.query(sql, function (err, result) {
+	// 	if (err) throw err;
+	// 	console.log('inserted data');
+	// });
 
-	sql = `REPLACE INTO users (id, name, email)
-	VALUES (NULL, 'JOHN', 'johnn@email.com')`;
-	db.query(sql, function (err, result) {
-		if (err) throw err;
-		console.log('inserted data');
-	});
+	// sql = `REPLACE INTO users (id, name, email)
+	// VALUES (NULL, 'JOHN', 'johnn@email.com')`;
+	// db.query(sql, function (err, result) {
+	// 	if (err) throw err;
+	// 	console.log('inserted data');
+	// });
 
 	sql = `select * from users`;
 	db.query(sql, function (err, result) {
